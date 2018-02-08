@@ -46,11 +46,11 @@ parameters:
     description: IP address/subnet on the storage mgmt network
     type: string
   StorageNetworkVlanID:
-    default: 30
+    default: ''
     description: Vlan ID for the storage network traffic.
     type: number
   StorageMgmtNetworkVlanID:
-    default: 40
+    default: ''
     description: Vlan ID for the storage mgmt network traffic.
     type: number
   ControlPlaneSubnetCidr: # Override this via parameter_defaults
@@ -82,7 +82,7 @@ resources:
           network_config:
             -
               type: interface
-              name: nic1
+              name: em3
               use_dhcp: false
               addresses:
                -
@@ -107,11 +107,11 @@ resources:
               members:
                 -
                   type: interface
-                  name: nic2
+                  name: p5p1
                   primary: true
                 -
                   type: interface
-                  name: nic3
+                  name: p5p2
             -
               type: vlan
               vlan_id: {get_param: InternalApiNetworkVlanID}
@@ -148,14 +148,14 @@ resources:
                       members:
                         -
                           type: interface
-                          name: nic4
+                          name: p7p1
                     -
                       type: ovs_dpdk_port
                       name: dpdk1
                       members:
                         -
                           type: interface
-                          name: nic5
+                          name: p7p2
 
 
 outputs:
