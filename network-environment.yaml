@@ -52,7 +52,7 @@ parameter_defaults:
   #Number of nodes to deploy.
   ControllerCount: 1
   ComputeCount: 3
-  CephCount: 2
+  CephStorageCount: 2
   # NTP server configuration.
   NtpServer: clock.redhat.com
 
