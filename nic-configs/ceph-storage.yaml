@@ -64,7 +64,7 @@ parameters:
     description: Vlan ID for the tenant network traffic.
     type: number
   ManagementNetworkVlanID:
-    default: ''
+    default: 23
     description: Vlan ID for the management network traffic.
     type: number
   ControlPlaneSubnetCidr: # Override this via parameter_defaults
