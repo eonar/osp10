@@ -2,37 +2,40 @@ resource_registry:
   # Specify the relative/absolute path to the config files you want to use for override the default.
   OS::TripleO::Compute::Net::SoftwareConfig: nic-configs/compute-ovs-dpdk.yaml
   OS::TripleO::Controller::Net::SoftwareConfig: nic-configs/controller.yaml
+  OS::TripleO::BlockStorage::Net::SoftwareConfig: nic-configs/cinder-storage.yaml
+  OS::TripleO::Compute::Net::SoftwareConfig: nic-configs/swift-storage.yaml
+  OS::TripleO::CephStorage::Net::SoftwareConfig: nic-configs/ceph-storage.yaml
   OS::TripleO::NodeUserData: first-boot.yaml
   OS::TripleO::NodeExtraConfigPost: post-install.yaml
 
 parameter_defaults:
   # Customize all these values to match the local environment
-  InternalApiNetCidr: 10.10.10.0/24
-  TenantNetCidr: 10.10.2.0/24
-  StorageNetCidr: 10.10.3.0/24
-  StorageMgmtNetCidr: 10.10.4.0/24
-  ExternalNetCidr: 172.20.12.112/28
+  InternalApiNetCidr: 172.17.0.0/24
+  TenantNetCidr: 172.16.0.0/24
+  StorageNetCidr: 172.18.0.0/24
+  StorageMgmtNetCidr: 172.19.0.0/24
+  ExternalNetCidr: 10.44.41.0/24
   # CIDR subnet mask length for provisioning network
   ControlPlaneSubnetCidr: '24'
-  InternalApiAllocationPools: [{'start': '10.10.10.10', 'end': '10.10.10.200'}]
-  TenantAllocationPools: [{'start': '172.10.2.100', 'end': '172.10.2.200'}]
-  StorageAllocationPools: [{'start': '10.10.3.100', 'end': '10.10.3.200'}]
-  StorageMgmtAllocationPools: [{'start': '10.10.4.100', 'end': '10.10.4.200'}]
+  InternalApiAllocationPools: [{'start': '172.17.0.10', 'end': '172.17.0.200'}]
+  TenantAllocationPools: [{'start': '172.16.0.100', 'end': '172.16.0.200'}]
+  StorageAllocationPools: [{'start': '172.18.0.100', 'end': '172.18.0.200'}]
+  StorageMgmtAllocationPools: [{'start': '172.19.0.100', 'end': '172.19.0.200'}]
   # Use an External allocation pool which will leave room for floating IPs
-  ExternalAllocationPools: [{'start': '172.20.12.114', 'end': '172.20.12.125'}]
+  ExternalAllocationPools: [{'start': '10.44.41.100', 'end': '10.44.41.200'}]
   # Set to the router gateway on the external network
-  ExternalInterfaceDefaultRoute: 172.20.12.126
+  ExternalInterfaceDefaultRoute: 10.44.41.251
   # Gateway router for the provisioning network (or Undercloud IP)
-  ControlPlaneDefaultRoute: 192.168.24.1
+  ControlPlaneDefaultRoute: 10.208.15.10
   # Generally the IP of the Undercloud
-  EC2MetadataIp: 192.168.24.1
+  EC2MetadataIp: 10.208.15.10
   InternalApiNetworkVlanID: 10
-  TenantNetworkVlanID: 11
-  StorageNetworkVlanID: 12
-  StorageMgmtNetworkVlanID: 13
-  ExternalNetworkVlanID: 14
+  TenantNetworkVlanID: 40
+  StorageNetworkVlanID: 20
+  StorageMgmtNetworkVlanID: 30
+  ExternalNetworkVlanID: 50
   # Define the DNS servers (maximum 2) for the overcloud nodes
-  DnsServers: ["8.8.8.8","8.8.4.4"]
+  DnsServers: ["10.44.1.100","10.44.1.33"]
   # May set to br-ex if using floating IPs only on native VLAN on bridge br-ex
   NeutronExternalNetworkBridge: "''"
   # The tunnel type for the tenant network (vxlan or gre). Set to '' to disable tunneling.
@@ -48,7 +51,8 @@ parameter_defaults:
   OvercloudComputeFlavor: compute
   #Number of nodes to deploy.
   ControllerCount: 1
-  ComputeCount: 1
+  ComputeCount: 3
+  CephCount: 2
   # NTP server configuration.
   NtpServer: clock.redhat.com
 
