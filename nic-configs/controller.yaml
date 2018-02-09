@@ -155,7 +155,7 @@ resources:
               members:
                 -
                   type: interface
-                  name: p7p1
+                  name: em1
 
 
 outputs:

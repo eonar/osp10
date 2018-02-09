@@ -139,23 +139,23 @@ resources:
               use_dhcp: false
               members:
                 -
-                  type: ovs_dpdk_bond
-                  name: dpdkbond0
-                  members:
-                    -
+                  #type: ovs_dpdk_bond
+                  #name: dpdkbond0
+                  #members:
+                  #  -
                       type: ovs_dpdk_port
                       name: dpdk0
                       members:
                         -
                           type: interface
                           name: p7p1
-                    -
-                      type: ovs_dpdk_port
-                      name: dpdk1
-                      members:
-                        -
-                          type: interface
-                          name: p7p2
+                  #  -
+                  #    type: ovs_dpdk_port
+                  #    name: dpdk1
+                  #    members:
+                  #      -
+                  #        type: interface
+                  #        name: p7p2
 
 
 outputs:
